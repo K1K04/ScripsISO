@@ -1,2 +1,2 @@
-# ScripsISO
-Scrip para la asignatura de ISO 
+# ScriptsISO
+Script para la asignatura de ISO 
