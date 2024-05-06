@@ -3,6 +3,7 @@
 # Descripcion: Crea un script que escanee un equipo o un segmento de red y devuelva los puertos abiertos y los protocolos estándar que se ejecutan en ellos (sacado de /etc/services por ejemplo).
 # Version: 10.1
 # Fecha de creacion: $(date)
+# Acepta segmentos de red
 # Variables: (las que se utilicen)
 
 # Función para verificar si el usuario es root
@@ -15,7 +16,7 @@ verificar_usuario_root() {
 
 # Función para verificar la conexión a Internet
 verificar_conexion_internet() {
-    if ! ping -c 1 google.com &> /dev/null; then
+    if [ ! ping -c 2 8.8.8.8 &> /dev/null ]; then
         echo "No hay conexión a Internet. Por favor, asegúrate de tener conexión antes de ejecutar este script."
         exit 1
     fi
