@@ -7,7 +7,7 @@
 
 # Función para verificar si el usuario es root
 verificar_usuario_root() {
-    if [[ $EUID -ne 0 ]]; then
+    if [ "$(id -u)" != 0 ]; then
         echo "Este script debe ejecutarse con privilegios de root."
         exit 1
     fi
@@ -15,7 +15,7 @@ verificar_usuario_root() {
 
 # Función para verificar la conexión a Internet
 verificar_conexion_internet() {
-    if ! ping -c 1 google.com &>/dev/null; then
+    if ! ping -c 1 google.com &> /dev/null; then
         echo "No hay conexión a Internet. Por favor, asegúrate de tener conexión antes de ejecutar este script."
         exit 1
     fi
