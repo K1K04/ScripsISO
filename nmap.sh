@@ -36,12 +36,14 @@ verificar_conexion_internet() {
 
 validar_entrada() {
     local entrada=$1
-    if [[ $entrada =~ ^(([0-9]{1,3}\.){3}[0-9]{1,3})$ ]]; then
+    local regExpIP="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+    local regExpSegIP="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\/(3[0-2]|[12]?[0-9])"
+    if [[ $entrada =~ $regExpIP ]]; then
         echo "La entrada '$entrada' es una dirección IP válida."
-    elif [[ $entrada =~ ^(([0-9]{1,3}\.){3}[0-9]{1,3}/(3[0-2]|[12]?[0-9]))$ ]]; then
+    elif [[ $entrada =~ $regExpSegIP ]]; then
         echo "La entrada '$entrada' es un segmento de red válido."
     else
-        echo "Error: '$entrada' no es ni una dirección IP válida ni un segmento de red válido."
+        mostrar_error "'$entrada' no es ni una dirección IP válida ni un segmento de red válido."
         exit 1
     fi
 }
@@ -113,7 +115,7 @@ main() {
     fi
 
     # Validar que el argumento sea un segmento de red válido o una dirección IP válida
-    validar_segmento_red_o_ip "$1"
+    validar_entrada "$1"
 
     # Validar la accesibilidad de la dirección IP
     verificar_accesibilidad_ip "$1"
