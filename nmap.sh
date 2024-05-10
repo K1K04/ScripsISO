@@ -19,24 +19,33 @@ mostrar_error() {
 # Función para verificar si el usuario es root
 verificar_usuario_root() {
     if [ "$(id -u)" != 0 ]; then
-        mostrar_error "Este script debe ejecutarse con privilegios de root."
+        echo "Este script debe ejecutarse con privilegios de root."
+        exit 1
     fi
 }
 
 # Función para verificar la conexión a Internet
 verificar_conexion_internet() {
-    if ! ping -c 2 google.com &>/dev/null; then
-        mostrar_error "No hay conexión a Internet. Por favor, asegúrate de tener conexión antes de ejecutar este script."
+    if [ ! ping -c 2 8.8.8.8 &> /dev/null ]; then
+        echo "No hay conexión a Internet. Por favor, asegúrate de tener conexión antes de ejecutar este script."
+        exit 1
     fi
 }
 
 # Función para validar un segmento de red o una dirección IP
-validar_segmento_red_o_ip() {
+
+validar_entrada() {
     local entrada=$1
-    if [[ ! $entrada =~ ^([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/[0-9]+|[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)$ ]]; then
-        mostrar_error "'$entrada' no es un segmento de red válido ni una dirección IP válida."
+    if [[ $entrada =~ ^(([0-9]{1,3}\.){3}[0-9]{1,3})$ ]]; then
+        echo "La entrada '$entrada' es una dirección IP válida."
+    elif [[ $entrada =~ ^(([0-9]{1,3}\.){3}[0-9]{1,3}/(3[0-2]|[12]?[0-9]))$ ]]; then
+        echo "La entrada '$entrada' es un segmento de red válido."
+    else
+        echo "Error: '$entrada' no es ni una dirección IP válida ni un segmento de red válido."
+        exit 1
     fi
 }
+
 
 # Función para verificar e instalar Nmap si es necesario
 verificar_instalacion_nmap() {
