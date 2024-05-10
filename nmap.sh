@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Autor: Kiko y Ivan
+# Autor: Francisco Javier Doblado Alonso y Iván Ruipérez Benítez
 # Descripcion: Crea un script que escanee un equipo o un segmento de red y devuelva los puertos abiertos y los protocolos estándar que se ejecutan en ellos (sacado de /etc/services por ejemplo).
 # Version: 10.1
 # Fecha de creacion: $(date)
@@ -23,13 +23,18 @@ verificar_conexion_internet() {
 }
 
 # Función para validar un segmento de red
-validar_segmento_red() {
-    local segmento=$1
-    if [[ ! $segmento =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/[0-9]+$ ]]; then
-        echo "Error: '$segmento' no es un segmento de red válido."
+validar_entrada() {
+    local entrada=$1
+    if [[ $entrada =~ ^(([0-9]{1,3}\.){3}[0-9]{1,3})$ ]]; then
+        echo "La entrada '$entrada' es una dirección IP válida."
+    elif [[ $entrada =~ ^(([0-9]{1,3}\.){3}[0-9]{1,3}/(3[0-2]|[12]?[0-9]))$ ]]; then
+        echo "La entrada '$entrada' es un segmento de red válido."
+    else
+        echo "Error: '$entrada' no es ni una dirección IP válida ni un segmento de red válido."
         exit 1
     fi
 }
+
 
 # Función para verificar e instalar Nmap si es necesario
 verificar_instalacion_nmap() {
@@ -91,7 +96,7 @@ if [ $# -eq 0 ]; then
 fi
 
 # Validar que el argumento sea un segmento de red válido
-validar_segmento_red "$1"
+validar_entrada "$1"
 
 # Validar la accesibilidad de la dirección IP
 verificar_accesibilidad_ip "$1"
