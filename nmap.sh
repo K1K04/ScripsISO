@@ -37,7 +37,7 @@ verificar_conexion_internet() {
 validar_entrada() {
     local entrada=$1
     local regExpIP="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
-    local regExpSegIP="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\/(3[0-2]|[12]?[0-9])"
+    local regExpSegIP="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\/(3[0-2]|[12]?[0-9])$"
     if [[ $entrada =~ $regExpIP ]]; then
         echo "La entrada '$entrada' es una dirección IP válida."
     elif [[ $entrada =~ $regExpSegIP ]]; then
@@ -74,7 +74,7 @@ verificar_accesibilidad_ip() {
         fi
     done
     if [ "$respuesta" = "no" ]; then
-        mostrar_error "No hay ninguna dirección IP accesible en el segmento de red $segmento_red."
+        mostrar_error "Dirección no accesible."
     fi
 }
 
@@ -123,7 +123,8 @@ main() {
     # Determinar si el argumento es un segmento de red o una dirección IP
     tipo=""
     destino=""
-    if [[ $1 =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/[0-9]+$ ]]; then
+    regExpSegIP="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\/(3[0-2]|[12]?[0-9])$"
+    if [[ $1 =~ regExpSegIP ]]; then
         tipo="segmento de red"
         destino="($1)"
     else
