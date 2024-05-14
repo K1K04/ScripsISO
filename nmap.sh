@@ -59,43 +59,59 @@ validar_entrada() {
 }
 
 # Función para verificar e instalar Nmap según el administrador de paquetes
+
 verificar_instalacion_nmap() {
-    local package_manager
-
-    # Detectar el administrador de paquetes disponible
-    if command -v apt-get &>/dev/null; then
-        package_manager="apt-get"
-    elif command -v yum &>/dev/null; then
-        package_manager="yum"
-    elif command -v zypper &>/dev/null; then
-        package_manager="zypper"
+    if command -v nmap &>/dev/null; then
+        echo -e "${VERDE}Nmap ya está instalado.${RESET}"
     else
-        mostrar_error "No se pudo detectar un administrador de paquetes compatible. Por favor, instala Nmap manualmente."
-        exit 1
-    fi
+        local package_manager
 
-    # Instalar Nmap usando el administrador de paquetes adecuado
-    echo -e "${VERDE}Nmap no está instalado. Instalando...${RESET}"
-    case $package_manager in
-        "apt-get")
-            sudo apt-get update &>/dev/null
-            sudo apt-get install -y nmap &>/dev/null
-            ;;
-        "yum")
-            sudo yum install -y nmap &>/dev/null
-            ;;
-        "zypper")
-            sudo zypper install -y nmap &>/dev/null
-            ;;
-    esac
+        # Detectar el administrador de paquetes disponible
+        if command -v apt-get &>/dev/null; then
+            package_manager="apt-get"
+        elif command -v dnf &>/dev/null; then
+            package_manager="dnf"
+        elif command -v pacman &>/dev/null; then
+            package_manager="pacman"
+        elif command -v entropy &>/dev/null; then
+            package_manager="entropy"
+        elif command -v zypper &>/dev/null; then
+            package_manager="zypper"
+        else
+            echo "No se pudo detectar un administrador de paquetes compatible. Por favor, instala Nmap manualmente."
+            exit 1
+        fi
 
-    # Verificar si la instalación fue exitosa
-    if ! command -v nmap &>/dev/null; then
-        mostrar_error "La instalación de Nmap falló. Por favor, instálalo manualmente e intenta de nuevo."
-    else
-        echo -e "${VERDE}Nmap instalado.${RESET}"
+        # Instalar Nmap usando el administrador de paquetes adecuado
+        echo -e "${VERDE}Nmap no está instalado. Instalando...${RESET}"
+        case $package_manager in
+            "apt-get")
+                sudo apt-get update &>/dev/null
+                sudo apt-get install -y nmap &>/dev/null
+                ;;
+            "dnf")
+                sudo dnf install -y nmap &>/dev/null
+                ;;
+            "pacman")
+                sudo pacman -Sy --noconfirm nmap &>/dev/null
+                ;;
+            "entropy")
+                sudo equo i nmap &>/dev/null
+                ;;
+            "zypper")
+                sudo zypper install -y nmap &>/dev/null
+                ;;
+        esac
+
+        # Verificar si la instalación fue exitosa
+        if command -v nmap &>/dev/null; then
+            echo -e "${VERDE}Nmap instalado.${RESET}"
+        else
+            mostrar_error "La instalación de Nmap falló. Por favor, instálalo manualmente e intenta de nuevo."
+        fi
     fi
 }
+
 # Función para verificar la accesibilidad de una dirección IP
 verificar_accesibilidad_ip() {
     local segmento_red=$1
