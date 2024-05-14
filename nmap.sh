@@ -1,9 +1,19 @@
 #!/usr/bin/env sh
 # Autor: Kiko y Ivan
 # Descripcion: Script para escanear puertos abiertos y protocolos en un segmento de red o una dirección IP.
-# Version: 1.0
-# Fecha de creacion: $(date)
-# Variables: (las que se utilicen)
+# Version: 1.0.3
+# Fecha de creacion: 14/05/2024
+# Variables: 
+# - ROJO: Define el color rojo para los mensajes de error.
+# - VERDE: Define el color verde para algunos mensajes informativos.
+# - RESET: Restablece el color del texto a su valor predeterminado.
+# Variables locales:
+# - entrada: Almacena la entrada (segmento de red o dirección IP) que se valida en la función validar_entrada.
+# - regExpIP: Expresión regular para validar una dirección IP.
+# - regExpSegIP: Expresión regular para validar un segmento de red.
+# - tipo: Almacena el tipo de entrada (segmento de red o dirección IP) determinado en la función principal.
+# - destino: Almacena el valor de la entrada (segmento de red o dirección IP) para mostrar en los mensajes.
+# - respuesta: Almacena la respuesta del usuario al confirmar una acción en el script.
 
 # Colores para mensajes
 ROJO='\033[0;31m'
