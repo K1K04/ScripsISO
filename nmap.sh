@@ -39,9 +39,9 @@ validar_entrada() {
     local regExpIP="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
     local regExpSegIP="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\/(3[0-2]|[12]?[0-9])$"
     if [[ $entrada =~ $regExpIP ]]; then
-        echo "La entrada '$entrada' es una dirección IP válida."
+        echo -e "${VERDE}La entrada '$entrada' es una dirección IP válida.${RESET}"
     elif [[ $entrada =~ $regExpSegIP ]]; then
-        echo "La entrada '$entrada' es un segmento de red válido."
+        echo -e "${VERDE}La entrada '$entrada' es un segmento de red válido.${RESET}"
     else
         mostrar_error "'$entrada' no es ni una dirección IP válida ni un segmento de red válido."
         exit 1
