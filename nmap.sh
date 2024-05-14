@@ -105,6 +105,7 @@ escanear_puertos() {
 
 # Función principal
 main() {
+    clear
     verificar_usuario_root
     verificar_conexion_internet
     verificar_instalacion_nmap
