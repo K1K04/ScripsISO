@@ -122,7 +122,7 @@ confirmar() {
     if [[ -z "$respuesta" ]] || [[ "$respuesta" == "s" ]]; then
         return 0  # Confirmación
     elif [[ "$respuesta" == "n" ]]; then
-        echo "Operación cancelada."
+        mostrar_error "Operación cancelada."
         exit 0
     else
         mostrar_error "Respuesta inválida."
