@@ -143,12 +143,15 @@ confirmar() {
     fi
 }
 
-# Función para escanear puertos y protocolos
+# Función para escanear puertos y protocolos y guardarlo en un log
 escanear_puertos() {
     local segmento_red=$1
+    local log="lognmap.txt"
+    local log_time=$(date "+%Y-%m-%d %H:%M:%S")
+    echo -e "\nFecha y hora de ejecución: $log_time\n" | tee -a $log
     # Escaneo de puertos y filtrado de la salida
     nmap -p- -sS --open --min-rate 6000 -n -Pn $segmento_red | \
-        grep -E -v "^(Starting Nmap|Host is up|Not shown|Some closed ports may be reported)"
+        grep -E -v "^(Starting Nmap|Host is up|Not shown|Some closed ports may be reported)" | tee -a $log
 }
 
 # Función principal
