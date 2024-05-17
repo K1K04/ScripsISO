@@ -6,6 +6,7 @@
 # Variables:
 # - ROJO: Define el color rojo para los mensajes de error.
 # - VERDE: Define el color verde para algunos mensajes informativos.
+# - AZUL: Define el color azul para algunos mensajes de creacion de log.
 # - RESET: Restablece el color del texto a su valor predeterminado.
 # Variables locales:
 # - entrada: Almacena la entrada (segmento de red o dirección IP) que se valida en la función validar_entrada.
