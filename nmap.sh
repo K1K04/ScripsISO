@@ -152,6 +152,7 @@ escanear_puertos() {
     # Escaneo de puertos y filtrado de la salida
     nmap -p- -sS --open --min-rate 6000 -n -Pn $segmento_red | \
         grep -E -v "^(Starting Nmap|Host is up|Not shown|Some closed ports may be reported)" | tee -a $log
+    echo -e "\nResultado del nmap guardado en el fichero $log"
 }
 
 # Función principal
