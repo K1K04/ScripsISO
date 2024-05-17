@@ -61,9 +61,7 @@ validar_entrada() {
 # Función para verificar e instalar Nmap según el administrador de paquetes
 
 verificar_instalacion_nmap() {
-    if command -v nmap &>/dev/null; then
-        echo -e "${VERDE}Nmap ya está instalado.${RESET}"
-    else
+    if ! command -v nmap &>/dev/null; then
         local package_manager
 
         # Detectar el administrador de paquetes disponible
