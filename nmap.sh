@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
-# Autor: Kiko y Ivan
+# Autor: Francisco Javier Doblado Alonso e Iván Ruipérez Benítez
+# Github: https://github.com/K1K04/ScriptsISO
 # Descripcion: Script para escanear puertos abiertos y protocolos en un segmento de red o una dirección IP.
 # Version: 1.0.3
 # Fecha de creacion: 14/05/2024
