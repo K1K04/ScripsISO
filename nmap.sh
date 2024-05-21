@@ -176,15 +176,12 @@ main() {
     verificar_accesibilidad_ip "$1"
 
     # Determinar si el argumento es un segmento de red o una dirección IP
-    tipo=""
-    destino=""
+    tipo="host"
+    destino="$1"
     regExpSegIP="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\/(3[0-2]|[12]?[0-9])$"
-    if [[ $1 =~ regExpSegIP ]]; then
+    if [[ $1 =~ $regExpSegIP ]]; then
         tipo="segmento de red"
         destino="($1)"
-    else
-        tipo="dirección IP"
-        destino="$1"
     fi
 
     # Mostrar mensaje de confirmación y solicitar confirmación al usuario
